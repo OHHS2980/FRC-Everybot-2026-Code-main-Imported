@@ -15,6 +15,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import frc.robot.commands.AdultMode;
 import frc.robot.commands.ClimbDown;
 import frc.robot.commands.ClimbUp;
 import frc.robot.commands.Drive;
@@ -50,7 +51,7 @@ public class RobotContainer {
       OPERATOR_CONTROLLER_PORT);
 
   // The autonomous chooser
-  private final SendableChooser<Command> autoChooser;
+ // private final SendableChooser<Command> autoChooser;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -67,12 +68,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("launchSequence", new LaunchSequence(fuelSubsystem));
     NamedCommands.registerCommand("spinUp", new SpinUp(fuelSubsystem));
 
-    autoChooser = AutoBuilder.buildAutoChooser();
+    //autoChooser = AutoBuilder.buildAutoChooser();
 
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    //SmartDashboard.putData("Auto Chooser", autoChooser);
 
     // Set the options to show up in the Dashboard for selecting auto modes. If you
     // add additional auto modes you can add additional lines here with
@@ -106,6 +107,12 @@ public class RobotContainer {
     operatorController.povDown().whileTrue(new ClimbDown(climberSubsystem));
     // While the up arrow on the directional pad is held it will cimb the robot
     operatorController.povUp().whileTrue(new ClimbUp(climberSubsystem));
+
+    
+    driverController.x().onTrue(new AdultMode(driveSubsystem,  1));
+    driverController.y().onTrue(new AdultMode(driveSubsystem,  2));
+    driverController.b().onTrue(new AdultMode(driveSubsystem,  3));
+    driverController.a().onTrue(new AdultMode(driveSubsystem,  4));
 
     // Set the default command for the drive subsystem to the command provided by
     // factory with the values provided by the joystick axes on the driver

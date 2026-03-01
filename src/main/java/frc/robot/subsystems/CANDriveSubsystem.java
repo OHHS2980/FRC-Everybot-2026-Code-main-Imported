@@ -38,6 +38,9 @@ import static frc.robot.Constants.DriveConstants.*;
 
 import java.time.Year;
 import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.opencv.objdetect.FaceDetectorYN;
 
@@ -55,9 +58,11 @@ public class CANDriveSubsystem extends SubsystemBase {
   private final DifferentialDrive drive;
 
   private final RelativeEncoder leftEncoder, rightEncoder;
-  private final DifferentialDriveOdometry odom;
+  private DifferentialDriveOdometry odom;
   
   public AHRS gyro;
+
+  public float speed = Constants.adultSpeed;
 
   public CANDriveSubsystem() {
 
@@ -74,7 +79,7 @@ public class CANDriveSubsystem extends SubsystemBase {
                         leftEncoder = leftLeader.getEncoder();
     rightEncoder = rightLeader.getEncoder();
 
-    odom = new DifferentialDriveOdometry(gyro.getRotation2d(), getDistance(leftEncoder), getDistance(rightEncoder));
+    //odom = new DifferentialDriveOdometry(gyro.getRotation2d(), getDistance(leftEncoder), getDistance(rightEncoder));
 
     // set up differential drive class
     drive = new DifferentialDrive(leftLeader, rightLeader);
@@ -121,34 +126,79 @@ public class CANDriveSubsystem extends SubsystemBase {
       e.printStackTrace();
     }
 
+    correctPassword.add(1);
+    correctPassword.add(1);
+    correctPassword.add(3);
+    correctPassword.add(2);
+    correctPassword.add(3);
+
+
     // Configure AutoBuilder last
-    AutoBuilder.configure(
-            this::getPose, // Robot pose supplier
-            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-            this::getCurrentSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
-            new PPLTVController(0.02), // PPLTVController is the built in path following controller for differential drive trains
-            robotConfig, // The robot configuration
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-              }
-              return false;
-            },
-            this // Reference to this subsystem to set requirements
-    );
-  
+  }
 
+  public List<Integer> correctPassword = new ArrayList<>();
+  public List<Integer> inputPassword = new ArrayList<>();
+
+  public void resetPassword() {
+    inputPassword.clear();
+    System.out.println("PASSWORD CLEARED");
+  }
+
+  public void addPassword(int button) {
+      inputPassword.add(button);
+
+      System.out.println("ADDED BUTTON: " + button);
+      System.out.println("NEW PASSWORD: " + inputPassword.toString());
+
+  }
+
+  public boolean checkPassLength() {
+      if (inputPassword.size() == 5) {
+          System.out.println("PASS AT MAX LENGTH");
+          return true;
+      }
+      System.out.println("PASS IS NOT AT MAX LENGTH");
+
+      return false;
+  }
+
+  public boolean checkPassword() {
+      if (correctPassword.equals(inputPassword))
+      {
+          System.out.println("PASS IS CORRECT");
+          return true;
+      }
+      System.out.println("PASS IS INCORRECT");
+      System.out.println(Arrays.asList(correctPassword).toString());
+      System.out.println(inputPassword.toString());
+      return false;
+  }
+
+  public boolean checkButton(int button) {
+      if (correctPassword.get(inputPassword.size()) == button) {
+          System.out.println("BUTTON IS CORRECT");
+          return true;
+      }
+      System.out.println("BUTTON IS INCORRECT. CORECT BUTTON IS " + correctPassword.get(inputPassword.size()));
+      return false;
+      
+  }
+
+  public void changeSpeed(float amount) {
+      float finalSpeed = speed + amount;
+      speed = Math.min(
+          Math.max(finalSpeed, 0f),
+          Constants.adultSpeed);  
+  }
+
+  public void setSpeed(float amount) {
+      speed = amount;
   }
 
   @Override
   public void periodic() {
-    odom.update(gyro.getRotation2d(), getDistance(leftEncoder).baseUnitMagnitude(), getDistance(rightEncoder).baseUnitMagnitude());
+    //odom.update(gyro.getRotation2d(), getDistance(leftEncoder).baseUnitMagnitude(), getDistance(rightEncoder).baseUnitMagnitude());
   }
 
   public void driveArcade(double xSpeed, double zRotation) {

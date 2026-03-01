@@ -33,6 +33,10 @@ public final class Constants {
     public static final double WHEEL_CIRCUMFERENCE = -69.420;
   }
 
+  public static float adultSpeed = 1f;
+
+  public static float kidSpeed = 0.5f;
+
   public static final class FuelConstants {
     // Motor controller IDs for Fuel Mechanism motors
     public static final int LEFT_INTAKE_LAUNCHER_MOTOR_ID = 5;
@@ -45,7 +49,7 @@ public final class Constants {
 
     // All values likely need to be tuned based on your robot
     public static final double INDEXER_INTAKING_PERCENT = -.8; 
-    public static final double INDEXER_LAUNCHING_PERCENT = 0.6;
+    public static final double INDEXER_LAUNCHING_PERCENT = 0.5;
     public static final double INDEXER_SPIN_UP_PRE_LAUNCH_PERCENT = -0.5;
 
     public static final double INTAKE_INTAKING_PERCENT = 0.6;
