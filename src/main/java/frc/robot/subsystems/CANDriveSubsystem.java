@@ -101,7 +101,6 @@ public class CANDriveSubsystem extends SubsystemBase {
     config.voltageCompensation(12);
     config.smartCurrentLimit(DRIVE_MOTOR_CURRENT_LIMIT);
     config.idleMode(IdleMode.kBrake);
-
     // Set configuration to follow each leader and then apply it to corresponding
     // follower. Resetting in case a new controller is swapped
     // in and persisting in case of a controller reset due to breaker trip
@@ -119,77 +118,16 @@ public class CANDriveSubsystem extends SubsystemBase {
     config.inverted(true);
     leftLeader.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    RobotConfig robotConfig = null;
-    try{
-      robotConfig = RobotConfig.fromGUISettings();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    correctPassword.add(1);
-    correctPassword.add(1);
-    correctPassword.add(3);
-    correctPassword.add(2);
-    correctPassword.add(3);
+    //RobotConfig robotConfig = null;
+    //try{
+      //robotConfig = RobotConfig.fromGUISettings();
+    //} catch (Exception e) {
+      //e.printStackTrace();
+    //}
 
 
     // Configure AutoBuilder last
 
-  }
-
-  public List<Integer> correctPassword = new ArrayList<>();
-  public List<Integer> inputPassword = new ArrayList<>();
-
-  public void resetPassword() {
-    inputPassword.clear();
-    System.out.println("PASSWORD CLEARED");
-  }
-
-  public void addPassword(int button) {
-      inputPassword.add(button);
-
-      System.out.println("ADDED BUTTON: " + button);
-      System.out.println("NEW PASSWORD: " + inputPassword.toString());
-
-  }
-
-  public boolean checkPassLength() {
-      if (inputPassword.size() == 5) {
-          System.out.println("PASS AT MAX LENGTH");
-          return true;
-      }
-      System.out.println("PASS IS NOT AT MAX LENGTH");
-
-      return false;
-  }
-
-  public boolean checkPassword() {
-      if (correctPassword.equals(inputPassword))
-      {
-          System.out.println("PASS IS CORRECT");
-          return true;
-      }
-      System.out.println("PASS IS INCORRECT");
-      System.out.println(Arrays.asList(correctPassword).toString());
-      System.out.println(inputPassword.toString());
-      return false;
-  }
-
-  public boolean checkButton(int button) {
-      if (correctPassword.get(inputPassword.size()) == button) {
-          System.out.println("BUTTON IS CORRECT");
-          return true;
-      }
-      System.out.println("BUTTON IS INCORRECT. CORECT BUTTON IS " + correctPassword.get(inputPassword.size()));
-      return false;
-      
-  }
-
-  public void changeSpeed(float amount) {
-      float finalSpeed = speed + amount;
-      speed = Math.min(
-          Math.max(finalSpeed, 0f),
-          Constants.adultSpeed);  
   }
 
   public void setSpeed(float amount) {
@@ -224,7 +162,7 @@ public class CANDriveSubsystem extends SubsystemBase {
       return pose;
   }
 
-  public void resetPose(Pose2d poseOdom)
+ public void resetPose(Pose2d poseOdom)
   {
     odom.resetPosition(gyro.getRotation2d(), getDistance(leftEncoder).baseUnitMagnitude(), getDistance(rightEncoder).baseUnitMagnitude(), new Pose2d());
   }

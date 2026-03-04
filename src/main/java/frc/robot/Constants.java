@@ -53,10 +53,10 @@ public final class Constants {
     public static final double INDEXER_SPIN_UP_PRE_LAUNCH_PERCENT = -0.5;
 
     public static final double INTAKE_INTAKING_PERCENT = 0.6;
-    public static final double LAUNCHING_LAUNCHER_PERCENT = .85;
+    public static final double LAUNCHING_LAUNCHER_PERCENT = 1;
     public static final double INTAKE_EJECT_PERCENT = -0.8;
 
-    public static final double SPIN_UP_SECONDS = 0.75;
+    public static final double SPIN_UP_SECONDS = 1.85;
   }
 
   public static final class ClimbConstants {
@@ -74,8 +74,8 @@ public final class Constants {
 
     // Port constants for driver and operator controllers. These should match the
     // values in the Joystick tab of the Driver Station software
-    public static final int DRIVER_CONTROLLER_PORT = 0;
-    public static final int OPERATOR_CONTROLLER_PORT = 1;
+    public static final int DRIVER_CONTROLLER_PORT = 1;
+    public static final int OPERATOR_CONTROLLER_PORT = 0;
 
     // This value is multiplied by the joystick value when rotating the robot to
     // help avoid turning too fast and beign difficult to control

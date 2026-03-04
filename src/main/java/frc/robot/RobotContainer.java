@@ -15,7 +15,6 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
-import frc.robot.commands.AdultMode;
 import frc.robot.commands.ClimbDown;
 import frc.robot.commands.ClimbUp;
 import frc.robot.commands.Drive;
@@ -43,8 +42,8 @@ public class RobotContainer {
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 
   // The driver's controller
-  private final CommandXboxController driverController = new CommandXboxController(
-      DRIVER_CONTROLLER_PORT);
+  //private final CommandXboxController driverController = new CommandXboxController(
+    //  DRIVER_CONTROLLER_PORT);
 
   // The operator's controller, by default it is setup to use a single controller
   private final CommandXboxController operatorController = new CommandXboxController(
@@ -108,18 +107,12 @@ public class RobotContainer {
     // While the up arrow on the directional pad is held it will cimb the robot
     operatorController.povUp().whileTrue(new ClimbUp(climberSubsystem));
 
-    
-    driverController.x().onTrue(new AdultMode(driveSubsystem,  1));
-    driverController.y().onTrue(new AdultMode(driveSubsystem,  2));
-    driverController.b().onTrue(new AdultMode(driveSubsystem,  3));
-    driverController.a().onTrue(new AdultMode(driveSubsystem,  4));
-
     // Set the default command for the drive subsystem to the command provided by
     // factory with the values provided by the joystick axes on the driver
     // controller. The Y axis of the controller is inverted so that pushing the
     // stick away from you (a negative value) drives the robot forwards (a positive
     // value)
-    driveSubsystem.setDefaultCommand(new Drive(driveSubsystem, driverController));
+    driveSubsystem.setDefaultCommand(new Drive(driveSubsystem, operatorController));
 
     fuelSubsystem.setDefaultCommand(fuelSubsystem.run(() -> fuelSubsystem.stop()));
 

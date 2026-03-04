@@ -20,11 +20,11 @@ public class Drive extends Command {
   CANDriveSubsystem driveSubsystem;
   CommandXboxController controller;
 
-  public Drive(CANDriveSubsystem driveSystem, CommandXboxController driverController) {
+  public Drive(CANDriveSubsystem driveSystem, CommandXboxController operatorController) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(driveSystem);
     driveSubsystem = driveSystem;
-    controller = driverController;
+    controller = operatorController;
+    addRequirements(driveSystem);
   }
 
   // Called when the command is initially scheduled.
@@ -39,7 +39,7 @@ public class Drive extends Command {
   // controllable.
   @Override
   public void execute() {
-    driveSubsystem.driveArcade(-controller.getLeftY() * DRIVE_SCALING * driveSubsystem.speed, -controller.getRightX() * ROTATION_SCALING * driveSubsystem.speed);
+    driveSubsystem.driveArcade(-controller.getLeftY() * DRIVE_SCALING, -controller.getLeftX() * ROTATION_SCALING);
   }
 
   // Called once the command ends or is interrupted.
