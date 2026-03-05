@@ -45,6 +45,8 @@ public class RobotContainer {
   //private final CommandXboxController driverController = new CommandXboxController(
     //  DRIVER_CONTROLLER_PORT);
 
+  private final CommandXboxController driverController = new CommandXboxController(
+      DRIVER_CONTROLLER_PORT);
   // The operator's controller, by default it is setup to use a single controller
   private final CommandXboxController operatorController = new CommandXboxController(
       OPERATOR_CONTROLLER_PORT);
@@ -112,7 +114,7 @@ public class RobotContainer {
     // controller. The Y axis of the controller is inverted so that pushing the
     // stick away from you (a negative value) drives the robot forwards (a positive
     // value)
-    driveSubsystem.setDefaultCommand(new Drive(driveSubsystem, operatorController));
+    driveSubsystem.setDefaultCommand(new Drive(driveSubsystem, driverController));
 
     fuelSubsystem.setDefaultCommand(fuelSubsystem.run(() -> fuelSubsystem.stop()));
 

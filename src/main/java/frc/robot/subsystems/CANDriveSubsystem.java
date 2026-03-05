@@ -66,8 +66,6 @@ public class CANDriveSubsystem extends SubsystemBase {
 
   public CANDriveSubsystem() {
 
-
-
     chassisSpeeds = new ChassisSpeeds();
 
     // create Brushless motors for drive
@@ -75,11 +73,6 @@ public class CANDriveSubsystem extends SubsystemBase {
     leftFollower = new SparkMax(LEFT_FOLLOWER_ID, MotorType.kBrushless);
     rightLeader = new SparkMax(RIGHT_LEADER_ID, MotorType.kBrushless);
     rightFollower = new SparkMax(RIGHT_FOLLOWER_ID, MotorType.kBrushless);
-
-                        leftEncoder = leftLeader.getEncoder();
-    rightEncoder = rightLeader.getEncoder();
-
-    //odom = new DifferentialDriveOdometry(gyro.getRotation2d(), getDistance(leftEncoder), getDistance(rightEncoder));
 
     // set up differential drive class
     drive = new DifferentialDrive(leftLeader, rightLeader);
@@ -101,6 +94,7 @@ public class CANDriveSubsystem extends SubsystemBase {
     config.voltageCompensation(12);
     config.smartCurrentLimit(DRIVE_MOTOR_CURRENT_LIMIT);
     config.idleMode(IdleMode.kBrake);
+    
     // Set configuration to follow each leader and then apply it to corresponding
     // follower. Resetting in case a new controller is swapped
     // in and persisting in case of a controller reset due to breaker trip
@@ -117,7 +111,6 @@ public class CANDriveSubsystem extends SubsystemBase {
     // so that postive values drive both sides forward
     config.inverted(true);
     leftLeader.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
     //RobotConfig robotConfig = null;
     //try{
       //robotConfig = RobotConfig.fromGUISettings();
@@ -127,6 +120,9 @@ public class CANDriveSubsystem extends SubsystemBase {
 
 
     // Configure AutoBuilder last
+
+    leftEncoder = leftLeader.getEncoder();
+    rightEncoder = rightLeader.getEncoder();
 
   }
 
