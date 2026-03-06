@@ -67,7 +67,7 @@ public class CANFuelSubsystem extends SubsystemBase {
 
   // A method to set the voltage of the intake roller
   public void setFeederRoller(double power) {
-    Indexer.set(-power); // positive for shooting
+    Indexer.set(-power * 0); // positive for shooting
   }
 
   // A method to stop the rollers
