@@ -46,7 +46,6 @@ public class CANFuelSubsystem extends SubsystemBase {
     launcherConfig1.voltageCompensation(12);
     launcherConfig1.idleMode(IdleMode.kCoast);
     RightIntakeLauncher.configure(launcherConfig1, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    launcherConfig1.inverted(true);
     LeftIntakeLauncher.configure(launcherConfig1, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     // put default values for various fuel operations onto the dashboard
     // all commands using this subsystem pull values from the dashbaord to allow
@@ -61,13 +60,13 @@ public class CANFuelSubsystem extends SubsystemBase {
 
   // A method to set the voltage of the intake roller
   public void setIntakeLauncherRoller(double power) {
-    LeftIntakeLauncher.set(power);
+    LeftIntakeLauncher.set(-power);
     RightIntakeLauncher.set(power); // positive for shooting
   }
 
   // A method to set the voltage of the intake roller
   public void setFeederRoller(double power) {
-    Indexer.set(-power * 0); // positive for shooting
+    Indexer.set(-power); // positive for shooting
   }
 
   // A method to stop the rollers
@@ -75,15 +74,11 @@ public class CANFuelSubsystem extends SubsystemBase {
     Indexer.set(0);
     LeftIntakeLauncher.set(0);
     RightIntakeLauncher.set(0);
-      //Indexer.set( -0.45);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // LeftIntakeLauncher.set(0.55); 
-    // RightIntakeLauncher.set(-0.55);
-   // Indexer.set(0.45);
 
   }
 }

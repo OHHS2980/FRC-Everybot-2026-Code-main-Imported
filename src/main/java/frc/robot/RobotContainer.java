@@ -19,7 +19,7 @@ import frc.robot.commands.ClimbDown;
 import frc.robot.commands.ClimbUp;
 import frc.robot.commands.Drive;
 import frc.robot.commands.Eject;
-import frc.robot.commands.ExampleAuto;
+//import frc.robot.commands.ExampleAuto;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Launch;
 import frc.robot.commands.LaunchSequence;

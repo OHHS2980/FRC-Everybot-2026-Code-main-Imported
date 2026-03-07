@@ -16,6 +16,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -25,6 +26,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry3d;
 import edu.wpi.first.units.DistanceUnit;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -42,10 +44,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.AutoLogOutput;
+
 public class CANDriveSubsystem extends SubsystemBase {
 
+  @AutoLogOutput
   public Pose2d pose;
 
+  @AutoLogOutput
   private final ChassisSpeeds chassisSpeeds;
  
   private final SparkMax leftLeader;
@@ -58,9 +65,8 @@ public class CANDriveSubsystem extends SubsystemBase {
   private final RelativeEncoder leftEncoder, rightEncoder;
   private DifferentialDriveOdometry odom;
   
+  //public AHRS gyro;
   public AHRS gyro;
-
-  public float speed = Constants.adultSpeed;
 
   public CANDriveSubsystem() {
 
@@ -74,6 +80,8 @@ public class CANDriveSubsystem extends SubsystemBase {
 
     leftEncoder = leftLeader.getEncoder();
     rightEncoder = rightLeader.getEncoder();
+
+    gyro = new AHRS(NavXComType.kMXP_SPI);
 
     // set up differential drive class
     drive = new DifferentialDrive(leftLeader, rightLeader);
@@ -143,10 +151,6 @@ public class CANDriveSubsystem extends SubsystemBase {
     );
 
 
-  }
-
-  public void setSpeed(float amount) {
-      speed = amount;
   }
 
   @Override
