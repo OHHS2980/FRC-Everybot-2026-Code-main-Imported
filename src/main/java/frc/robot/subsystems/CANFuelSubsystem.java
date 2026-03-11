@@ -4,19 +4,15 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 import static frc.robot.Constants.FuelConstants.*;
 
@@ -44,7 +40,7 @@ public class CANFuelSubsystem extends SubsystemBase {
     SparkMaxConfig launcherConfig1 = new SparkMaxConfig();
     launcherConfig1.smartCurrentLimit(LAUNCHER_MOTOR_CURRENT_LIMIT);
     launcherConfig1.voltageCompensation(12);
-    launcherConfig1.idleMode(IdleMode.kCoast);
+    launcherConfig1.idleMode(IdleMode.kBrake);
     RightIntakeLauncher.configure(launcherConfig1, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     LeftIntakeLauncher.configure(launcherConfig1, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     // put default values for various fuel operations onto the dashboard

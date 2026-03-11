@@ -27,7 +27,6 @@ import frc.robot.commands.SpinUp;
 import frc.robot.subsystems.CANDriveSubsystem;
 import frc.robot.subsystems.CANFuelSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
-
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -42,9 +41,6 @@ public class RobotContainer {
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 
   // The driver's controller
-  //private final CommandXboxController driverController = new CommandXboxController(
-    //  DRIVER_CONTROLLER_PORT);
-
   private final CommandXboxController driverController = new CommandXboxController(
       DRIVER_CONTROLLER_PORT);
   // The operator's controller, by default it is setup to use a single controller
@@ -126,11 +122,11 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-    public Command getAutonomousCommand() {
-    // This method loads the auto when it is called, however, it is recommended
-    // to first load your paths/autos when code starts, then return the
-    // pre-loaded auto/path
-    return new PathPlannerAuto("Example Auto");
+  public Command getAutonomousCommand() {
+  // This method loads the auto when it is called, however, it is recommended
+  // to first load your paths/autos when code starts, then return the
+  // pre-loaded auto/path
+    return new PathPlannerAuto("New Auto");
   }
 }
 
